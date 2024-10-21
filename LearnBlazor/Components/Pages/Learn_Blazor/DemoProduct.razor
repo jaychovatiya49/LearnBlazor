@@ -1,34 +1,23 @@
 ﻿@page "/learnBlazor/demoProduct"
 
 <h2 class="text-primary">Demo Project</h2>
+<p>Favorite Count : @string.Join(", ", FavoriteCount)</p>
 <div class="p-2 mt-2">
 	<div class="row">
 		@foreach (var prod in ProductList)
 		{
-			<div class="bg-light border col-6">
-				<h4 class="text-secondary">Product - @prod.Id</h4>
-				<hr />
-				Name - @prod.Name <br/>
-				Show Properties :
-				<input type="checkbox" @bind="prod.IsActive" />
+			<_IndividualProduct Product="prod" onFavoriteUpdated="FavoriteCountChanged">
 
-				@if (prod.IsActive)
-				{
-					@foreach (var prodProp in prod.ProductProperties)
-					{
-						<p>@prodProp.Key - @prodProp.Value</p>
-					}
-				}
-				<br />
-				<_DeleteButtonComponent ProductId="@prod.Id">
-				</_DeleteButtonComponent>
-			</div>
+			</_IndividualProduct>
+
 		}
 	</div>
 </div>
 
 @code {
 	List<Product> ProductList = new();
+
+	public List<int> FavoriteCount = new();
 
 	protected override void OnInitialized()
 	{
@@ -59,5 +48,24 @@
 					new Product_Prop {Id = 3,Key = "Color",Value = "White"}
 				}
 			});
+	}
+
+	protected void FavoriteCountChanged((int productId, bool isSelected) selection)
+	{
+
+		if (selection.isSelected) // Add product ID if selected
+		{
+			if (!FavoriteCount.Contains(selection.productId))
+			{
+				FavoriteCount.Add(selection.productId);
+			}
+		}
+		else // Remove product ID if unselected
+		{
+			if (FavoriteCount.Contains(selection.productId))
+			{
+				FavoriteCount.Remove(selection.productId);
+			}
+		}
 	}
 }
