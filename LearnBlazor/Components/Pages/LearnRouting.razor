@@ -1,0 +1,57 @@
+﻿@page "/learnrouting"
+@* @page "/learnrouting/{Param1}"  
+@page "/learnrouting/{Param1}/{Param2}"  *@
+@page "/learnrouting/catch-all/{*PageRouting}"
+@page "/learnBlazor/learnrouting" 
+@page "/learnrouting/learnBlazor"
+
+@*  
+	Simple Page Route
+	Routing with Parameter
+	Routing with Multiple Parameter
+	Use *(astric) to catch all param
+	Also able to create multiple routing (use NavLinkMatch.Prefix to focus tab)
+*@
+
+@inject NavigationManager _NavigationManager
+
+<h3>LearnRouting</h3>
+
+<p>Param 1 : @Param1 </p>
+<p>Param 2 : @Param2 </p>
+<p>Page Routing : @PageRouting </p>
+
+@* <a href="learnRouting?Param1=Learn&Param2=Blazor" class="btn btn-primary">Navigate to query Param</a> *@
+
+<button class="btn btn-primary" @onclick="NavigateToQuery">Navigate to query Param</button>
+<button class="btn btn-success" @onclick="LoadParameter">Load Parameter</button>
+
+<br />
+
+<div class="bg-info" style="height:1000px"></div>
+<h3 id="main-title">Reach Main</h3>
+
+@code {
+	[SupplyParameterFromQuery]
+	public string Param1 { get; set; }
+
+	[SupplyParameterFromQuery]
+	public string Param2 { get; set; } = "";
+
+	[Parameter]
+	public string PageRouting { get; set; } = "";
+
+	private void LoadParameter()
+	{
+		var uri = new Uri(_NavigationManager.Uri);
+		var query = Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery(uri.Query);
+		Param1 = query["Param1"];
+		Param2 = query["Param2"];
+		// _NavigationManager.Refresh(forceReload: true); 
+	}
+
+	private void NavigateToQuery()
+	{
+		_NavigationManager.NavigateTo("learnRouting?Param1=Learn&Param2=Blazor");
+	}
+}
