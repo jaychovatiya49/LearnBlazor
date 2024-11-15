@@ -6,4 +6,27 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Content Remove="Components\Pages\BlazorJs.razor" />
+    <Content Remove="Components\Pages\Learn_Blazor\LeranBlazorComponent\LifeCycle.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Components\Pages\BlazorJs.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Components\Pages\BlazorJs.razor" />
+    <_ContentIncludedByDefault Remove="Components\Pages\Learn_Blazor\LeranBlazorComponent\LifeCycle.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Components\Pages\Learn_Blazor\BlazorJs.razor" />
+    <None Include="Components\Pages\Learn_Blazor\LifeCycle.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Components\Pages\Learn_Blazor\LeranBlazorComponent\LifeCycle.razor" />
+  </ItemGroup>
+
 </Project>
